@@ -4,6 +4,10 @@ import preproc
 import pathutils
 from pathutils import FilePath
 
+COMPILER = "g++"
+COMPILER_FLAGS=["-g", "-Wall", "-Wextra"]
+LINKER_FLAGS=["-lraylib"]
+
 class CompileUnit:
 	path:FilePath
 	deps:list[str] = []
