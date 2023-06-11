@@ -54,7 +54,7 @@ class FilePath:
 
 		return directory, name, ext
 
-PROJECT_DIRECTORY = "/mnt/ARCHIVAL/BUP2/code/python/CONTROLpy/TESTBENCH"
+PROJECT_DIRECTORY = "./TESTBENCH"
 PROJECT_DIRECTORY = os.path.abspath(PROJECT_DIRECTORY)
 
 BUILD_DIRECTORY = PROJECT_DIRECTORY + "/build"
