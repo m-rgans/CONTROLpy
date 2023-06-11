@@ -1,5 +1,8 @@
 import os
 
+import mesg
+import globals
+
 import compileunit
 from compileunit import CompileUnit
 
@@ -22,7 +25,7 @@ def getDependencies(unit:FilePath) -> set[FilePath]:
 
 		#And process them
 		for d in newDeps:
-			print("Adding Dependency of " + str(unit) + ": " + str(d))
+			mesg.info("Adding Dependency of " + str(unit) + ": " + str(d),mesg.MessageClass.DEPENDENCY)
 			addToPool(d)
 
 	addToPool(unit)
@@ -33,8 +36,8 @@ def getDependenciesIndividual(unit:FilePath) -> set():
 	deps = set()
 
 	if not os.path.exists(str(unit)):
-		print("Dependency not found: "+str(unit))
-		exit()
+		mesg.error("Dependency not found: " + str(unit), mesg.MessageClass.DEPENDENCY)
+		exit(globals.FAILURE_CODE.DEPENDENCY_NOT_FOUND)
 
 	f = open(str(unit), "r")
 

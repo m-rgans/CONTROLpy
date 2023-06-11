@@ -1,4 +1,5 @@
 import os
+import mesg
 
 class FilePath:
 	dir:str = ""
@@ -50,28 +51,22 @@ class FilePath:
 
 		directory = os.path.dirname(p) + '/'
 
-		#print(directory + "%" + name + "%" + ext)
-
 		return directory, name, ext
 
-PROJECT_DIRECTORY = "./TESTBENCH"
-PROJECT_DIRECTORY = os.path.abspath(PROJECT_DIRECTORY)
-
-BUILD_DIRECTORY = PROJECT_DIRECTORY + "/build"
+import globals
+from globals import PROJECT_DIRECTORY
+from globals import BUILD_DIRECTORY
+from globals import IGNORED_FOLDERS
 
 os.chdir(PROJECT_DIRECTORY)
 
 allFiles = set[FilePath]()
 allCompUnits = set[FilePath]()
-IGNORED_FOLDERS = {
-    ".git",
-    "build"
-}
 
 for root,dirs,files in os.walk(PROJECT_DIRECTORY):
 	ignored = False
 	for ignDir in IGNORED_FOLDERS:
-		if root.startswith(PROJECT_DIRECTORY + ignDir):
+		if ignDir in root:
 			ignored = True
 			break
 	
@@ -79,10 +74,10 @@ for root,dirs,files in os.walk(PROJECT_DIRECTORY):
 		continue
 
 	for f in files:
-		print("[All files] Adding "+ root + "/" + f)
+		mesg.info("Adding " + root + "/" + f, mesg.MessageClass.GATHER)
 		allFiles.add(FilePath(root + "/" + f))
 
 for f in allFiles:
 	if f.ext == "cpp" or f.ext == "c":
-		print("[Compilation Units] Adding " + str(f))
+		mesg.info("Adding " + str(f), mesg.MessageClass.GATHER)
 		allCompUnits.add(f)

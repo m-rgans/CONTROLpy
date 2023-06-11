@@ -19,6 +19,9 @@ for f in pathutils.allCompUnits:
 
     # Check file for updates
     if obj.checkUpdated():
-        obj.compile()
+        #obj.compile()
+        pass
+
+
 
 #linking phase

@@ -3,16 +3,22 @@ import os
 import subprocess
 
 import preproc
-
+import mesg
 import pathutils
 from pathutils import FilePath
 
-CPP_COMPILER = "g++"
-C_COMPILER = "gcc"
-COMPILER_FLAGS=["-g", "-Wall", "-Wextra"]
-LINKER_FLAGS=["-lraylib"]
+import globals
 
-POSIX_MAX_FILENAME_LENGTH:int = 255
+from globals import CPP_COMPILER
+from globals import C98_COMPILER
+
+from globals import C_FLAGS
+from globals import CPP_FLAGS
+from globals import C98_FLAGS
+
+from globals import LINKER_FLAGS
+
+from globals import POSIX_MAX_FILENAME_LENGTH
 
 class CompileUnit:
 	path:FilePath
@@ -49,10 +55,27 @@ class CompileUnit:
 		return srcTime > objTime
 
 	def compile(self) -> bool:
-		print("COMPILING " + self.path.name + self.path.ext)
-		procArgs = [CPP_COMPILER, "-c"]
-		procArgs.extend(COMPILER_FLAGS)
-		procArgs.extend(LINKER_FLAGS)
+		mesg.info("Compiling " + str(self.path), mesg.MessageClass.COMPILATION)
+		procArgs:list[str] = []
+		
+		if self.path.ext == "cpp":
+			procArgs.extend(
+				[
+					CPP_COMPILER,
+					C_FLAGS,
+					CPP_FLAGS,
+				]
+			)
+		else:
+			procArgs.extend(
+				[
+					C98_COMPILER,
+					C_FLAGS,
+					C98_FLAGS,
+				]
+			)
+
+		#join the procs and deal with them, this is thread bad
 		procArgs.append(str(self.path))
 		procArgs.append("-o" + str(self.objname()))
 		proc = subprocess.Popen(procArgs)
