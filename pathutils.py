@@ -57,6 +57,8 @@ class FilePath:
 PROJECT_DIRECTORY = "/mnt/ARCHIVAL/BUP2/code/python/CONTROLpy/TESTBENCH"
 PROJECT_DIRECTORY = os.path.abspath(PROJECT_DIRECTORY)
 
+BUILD_DIRECTORY = PROJECT_DIRECTORY + "/build"
+
 os.chdir(PROJECT_DIRECTORY)
 
 allFiles = set[FilePath]()
