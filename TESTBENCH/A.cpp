@@ -1,3 +1,5 @@
+#pragma once
+
 #include "E.cpp"
 #include "F.cpp"
 #include "G.cpp"

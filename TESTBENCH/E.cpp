@@ -1,1 +1,2 @@
- end
+#pragma once
+// end
