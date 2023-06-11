@@ -6,11 +6,13 @@ from pathutils import FilePath
 from compileunit import CompileUnit
 
 
-objects:set[CompileUnit] = set()
-
-for f in pathutils.allFiles:
-    print(f)
+objects:set[CompileUnit] = set[CompileUnit]()
 
 for f in pathutils.allCompUnits:
-    print(f)
-    #objects.add(CompileUnit(f))
+    # Fetch file
+    print("Adding file " + str(f))
+    objects.add(CompileUnit(f))
+
+    # Check file for updates
+
+    # If needs recompile, do that

@@ -1,3 +1,5 @@
+import os
+
 import compileunit
 from compileunit import CompileUnit
 
@@ -20,6 +22,7 @@ def getDependencies(unit:FilePath) -> set[FilePath]:
 
 		#And process them
 		for d in newDeps:
+			print("Adding Dependency of " + str(unit) + ": " + str(d))
 			addToPool(d)
 
 	addToPool(unit)
@@ -28,6 +31,11 @@ def getDependencies(unit:FilePath) -> set[FilePath]:
 
 def getDependenciesIndividual(unit:FilePath) -> set():
 	deps = set()
+
+	if not os.path.exists(str(unit)):
+		print("Dependency not found: "+str(unit))
+		exit()
+
 	f = open(str(unit), "r")
 
 	comment:bool = False
