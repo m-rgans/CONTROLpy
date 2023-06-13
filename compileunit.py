@@ -36,7 +36,7 @@ class CompileUnit:
 			p = p[len(p) - POSIX_MAX_FILENAME_LENGTH:]
 
 		p = p.replace("/",".")
-		return FilePath("build/" + p)
+		return FilePath(globals.BUILD_DIRECTORY + p)
 		
 	def checkUpdated(self) -> bool:
 		p:FilePath = self.objname()
@@ -78,5 +78,5 @@ class CompileUnit:
 		#join the procs and deal with them, this is thread bad
 		procArgs.append(str(self.path))
 		procArgs.append("-o" + str(self.objname()))
-		proc = subprocess.Popen(procArgs)
+		proc = subprocess.run(procArgs)
 		pass

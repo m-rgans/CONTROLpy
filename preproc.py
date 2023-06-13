@@ -30,7 +30,7 @@ def getDependencies(unit:FilePath) -> set[FilePath]:
 
 	addToPool(unit)
 
-	return pool
+	return pool	
 
 def getDependenciesIndividual(unit:FilePath) -> set():
 	deps = set()

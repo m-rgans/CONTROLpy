@@ -81,3 +81,11 @@ for f in allFiles:
 	if f.ext == "cpp" or f.ext == "c":
 		mesg.info("Adding " + str(f), mesg.MessageClass.GATHER)
 		allCompUnits.add(f)
+
+import hashlib
+
+
+def hashFunc(s:str) -> str:
+	h = hashlib.sha256(usedforsecurity=False)
+	h.update(s)
+	return str(h.digest())
