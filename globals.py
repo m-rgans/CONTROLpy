@@ -23,6 +23,7 @@ CPP_COMPILER = "g++"
 C98_COMPILER = "gcc"
 
 C_FLAGS = ["-g", "-Wall", "-Wextra"]
+C_FLAGS.append("-I" + PROJECT_DIRECTORY)
 
 CPP_FLAGS = []
 C98_FLAGS = []

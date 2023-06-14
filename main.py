@@ -32,9 +32,12 @@ def build():
         objectPaths.append(str(f))
 
     for f in objects:
-        mesg.info("Compiling:" + f.name, mesg.MessageClass.COMPILATION)
+        mesg.info("Compiling:" + f.path.name, mesg.MessageClass.COMPILATION)
         if f.checkUpdated():
-            f.compile()
+            x:int = f.compile()
+            if x != 0:
+                mesg.error("Program failed to compile.", mesg.MessageClass.COMPILATION)
+                exit(2)
     
     #linking phase
     procArgs:list[str] = [globals.CPP_COMPILER]
@@ -44,8 +47,18 @@ def build():
     proc = subprocess.run(procArgs)
 
     if proc.returncode != 0:
-        mesg.error("Program failed to link.")
+        mesg.error("Program failed to link.", mesg.MessageClass.COMPILATION)
 
 def test():
     build()
-    proc = s
+    proc = subprocess.run(globals.BUILD_DIRECTORY + globals.EXECUTABLE_NAME)
+
+from globals import OPERATION
+from globals import OPERATION_ID
+
+if OPERATION == OPERATION_ID.BUILD:
+    build()
+elif OPERATION == OPERATION_ID.CLEAN:
+    clean()
+elif OPERATION == OPERATION_ID.TEST:
+    test()

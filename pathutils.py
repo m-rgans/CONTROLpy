@@ -87,5 +87,5 @@ import hashlib
 
 def hashFunc(s:str) -> str:
 	h = hashlib.sha256(usedforsecurity=False)
-	h.update(s)
-	return str(h.digest())
+	h.update(s.encode('utf-8'))
+	return str(h.hexdigest())

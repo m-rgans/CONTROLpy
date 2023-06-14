@@ -29,6 +29,7 @@ class CompileUnit:
 		deps = preproc.getDependencies(self.path)
 
 	def objname(self) -> FilePath:
+		return globals.BUILD_DIRECTORY + pathutils.hashFunc(str(self.path)) + ".o"
 		p:str = str(self.path)
 		p += ".o"
 
@@ -54,18 +55,14 @@ class CompileUnit:
 
 		return srcTime > objTime
 
-	def compile(self) -> bool:
+	def compile(self) -> int:
 		mesg.info("Compiling " + str(self.path), mesg.MessageClass.COMPILATION)
 		procArgs:list[str] = []
 		
 		if self.path.ext == "cpp":
-			procArgs.extend(
-				[
-					CPP_COMPILER,
-					C_FLAGS,
-					CPP_FLAGS,
-				]
-			)
+			procArgs.append(CPP_COMPILER)
+			procArgs.extend(C_FLAGS)
+			procArgs.extend(CPP_FLAGS)
 		else:
 			procArgs.extend(
 				[
@@ -76,7 +73,10 @@ class CompileUnit:
 			)
 
 		#join the procs and deal with them, this is thread bad
+		procArgs.append("-c")
 		procArgs.append(str(self.path))
 		procArgs.append("-o" + str(self.objname()))
+		print(procArgs)
 		proc = subprocess.run(procArgs)
-		pass
+		print("RESULT: " + str(proc.returncode))
+		return proc.returncode
